@@ -5,6 +5,11 @@ import math
 g = 9.81  # Gravité en m/s²
 WIDTH, HEIGHT = 800, 600  # Taille de la fenêtre
 
+# Charger l'image de la balle
+pygame.init()
+ball_image = pygame.image.load("images/boulet_de_canon.png")  # Assurez-vous que l'image est bien placée dans le dossier 'images'
+ball_size = ball_image.get_rect().size  # Taille de l'image pour ajuster le positionnement
+
 
 # Fonction pour calculer la position du projectile
 def equation_horaire(force, angle, t):
@@ -17,7 +22,6 @@ def equation_horaire(force, angle, t):
 
 # Simulation avec pygame
 def simulate_projectile(force, angle):
-    pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     clock = pygame.time.Clock()
     running = True
@@ -48,6 +52,9 @@ def simulate_projectile(force, angle):
         # Afficher la trajectoire
         for point in trajectory:
             pygame.draw.circle(screen, (255, 0, 0), point, 3)
+
+        # Dessiner l'image de la balle
+        screen.blit(ball_image, (x - ball_size[0] // 2, y - ball_size[1] // 2))
 
         pygame.display.flip()
         clock.tick(30)
