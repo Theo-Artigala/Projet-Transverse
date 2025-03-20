@@ -1,0 +1,48 @@
+# Fichiers et dossiers spécifiques à PyCharm
+.idea/
+
+# Environnements virtuels
+venv/
+.env/
+
+# Fichiers compilés Python
+__pycache__/
+*.py[cod]
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Dépendances
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Fichiers de tests et couvertures
+.coverage
+.tox/
+.nox/
+
+# Configurations et fichiers sensibles
+*.sqlite3
+*.db
+*.env
+.envrc
+*.pyo
+
+# Fichiers spécifiques aux outils
+.mypy_cache/
+.pytest_cache/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Dossiers de build et distribution
+dist/
+build/
+*.egg-info/
+
+# Docker
+*.dockerfile
+*.dockerignore
