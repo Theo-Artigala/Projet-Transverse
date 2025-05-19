@@ -37,7 +37,7 @@ def lancer_jeu():
         pygame.display.flip()
         clock.tick(FPS)
 
-    pygame.quit()
+    pygame.end_screen()
 
 
 def selection_parametres(screen, fond):
