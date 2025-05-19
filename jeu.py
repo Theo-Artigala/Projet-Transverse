@@ -32,10 +32,16 @@ def lancer_jeu(niveau):
         ball.update(niveau.murs)
         ball.draw(screen)
         hoop.draw(screen)
+        global NBR_DESSAI
         if ball.vx ==0 and ball.vy ==0:
             son.play()
+            NBR_DESSAI = NBR_DESSAI + 1
+            niveau1 = niveaux[niveau_actuel]
+            niveau1.ball_start = (ball.x, ball.y)
+            lancer_jeu(niveau1)
         if hoop.check_collision(ball) and gamestate:
             gamestate = False
+
             print("Panier réussi !")
 
         # Dessine les murs du niveau

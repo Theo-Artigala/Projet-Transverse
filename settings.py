@@ -7,6 +7,7 @@ HEIGHT = 768
 FPS = 60
 GRAVITY = 1
 SCORE = 0
+NBR_DESSAI = 0
 BACKGROUND_IMAGE = "images/bg2.jpg"
 BALL_IMAGE = "images/balle.png"
 HOOP_IMAGE = "images/hoop.png"
