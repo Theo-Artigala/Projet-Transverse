@@ -1,4 +1,6 @@
 # settings.py
+import pygame
+pygame.mixer.init()
 
 WIDTH = 1366
 HEIGHT = 768
@@ -14,3 +16,4 @@ END_SCREEN = "images/endscreen.png"
 IMAGE_BOUTON_RESTART = "images/bouton_restart.png"
 IMAGE_BOUTON_QUIT = "images/bouton_quit.png"
 niveau_actuel = 0
+son = pygame.mixer.Sound('sons/death_sound.wav')

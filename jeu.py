@@ -1,8 +1,10 @@
 import pygame
 from settings import *
-from ball import Ball
-from hoop import Hoop
+from ball import *
+from hoop import *
 from niveau import *
+from hoop import *
+
 
 def lancer_jeu(niveau):
     pygame.init()
@@ -14,9 +16,8 @@ def lancer_jeu(niveau):
     angle, force = selection_parametres(screen, fond)
 
     # Création des objets
-    # Créer le cerceau et la balle
     hoop = Hoop(*niveau.hoop_pos)
-    ball = Ball(*niveau.ball_start, niveau.force, niveau.angle)
+    ball = Ball(*niveau.ball_start, force, angle)
 
     # Boucle de jeu
     running = True
@@ -27,20 +28,25 @@ def lancer_jeu(niveau):
             if event.type == pygame.QUIT:
                 running = False
 
-        ball.update()
+        # Utilise la liste de murs du niveau
+        ball.update(niveau.murs)
         ball.draw(screen)
         hoop.draw(screen)
-
-        if hoop.check_collision(ball) and gamestate == True:
+        if ball.vx ==0 and ball.vy ==0:
+            son.play()
+        if hoop.check_collision(ball) and gamestate:
             gamestate = False
-
             print("Panier réussi !")
 
+        # Dessine les murs du niveau
+        for wall in niveau.murs:
+            wall.draw(screen)
 
         pygame.display.flip()
         clock.tick(FPS)
 
-    pygame.end_screen()
+    pygame.quit()
+
 
 
 def selection_parametres(screen, fond):
