@@ -2,19 +2,21 @@ import pygame
 from settings import *
 from ball import Ball
 from hoop import Hoop
+from niveau import *
 
-def lancer_jeu():
+def lancer_jeu(niveau):
     pygame.init()
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
-    fond = pygame.image.load(BACKGROUND_IMAGE)
-    fond = pygame.transform.scale(fond, (WIDTH, HEIGHT))
+    background = pygame.image.load(niveau.decor)
+    fond = pygame.transform.scale(background, (WIDTH, HEIGHT))
     gamestate = True
     angle, force = selection_parametres(screen, fond)
 
     # Création des objets
-    ball = Ball(50, HEIGHT - 50, force,angle)
-    hoop = Hoop(WIDTH - 150, HEIGHT // 2)
+    # Créer le cerceau et la balle
+    hoop = Hoop(*niveau.hoop_pos)
+    ball = Ball(*niveau.ball_start, niveau.force, niveau.angle)
 
     # Boucle de jeu
     running = True
@@ -33,6 +35,7 @@ def lancer_jeu():
             gamestate = False
 
             print("Panier réussi !")
+
 
         pygame.display.flip()
         clock.tick(FPS)

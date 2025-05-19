@@ -1,11 +1,13 @@
 import pygame
 import jeu
 from settings import *
+from niveau import *
 
 def menu():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption(MENU_PRINCIPAL)
+    niveau_choisi = niveaux[niveau_actuel]
 
     background = pygame.image.load(BACKGROUND_IMAGE)
     button_img = pygame.image.load(IMAGE_BOUTON_START)
@@ -24,6 +26,6 @@ def menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
                     running = False
-                    jeu.lancer_jeu()
+                    jeu.lancer_jeu(niveau_choisi)
 
         pygame.display.flip()
