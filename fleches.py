@@ -84,8 +84,9 @@ def fleche_force(force):
 
     return force
 
-"""angle=fleche_direction(0)
-print(angle)"""
+angle=fleche_direction(0)
+print(angle)
+
 
 force=fleche_force(10)
 print(force)
