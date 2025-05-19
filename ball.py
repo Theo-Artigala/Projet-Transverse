@@ -13,7 +13,7 @@ class Ball:
         self.vx = force * math.cos(self.angle)
         self.vy = -force * math.sin(self.angle)
         self.bounces = 0
-        self.max_bounces = 3
+        self.max_bounces = 6
         self.rect = pygame.Rect(self.x - self.radius, self.y - self.radius, self.radius * 2, self.radius * 2)
 
     def update(self):

@@ -42,7 +42,7 @@ def lancer_jeu():
 
 def selection_parametres(screen, fond):
     angle = 45
-    force = 50
+    force = 25
     font = pygame.font.Font(None, 30)
 
     selecting = True
