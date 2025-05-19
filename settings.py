@@ -1,7 +1,7 @@
 # settings.py
 
 WIDTH, HEIGHT = 1080, 720  # Taille de la fenêtre
-FPS = 60  # Framerate
+FPS = 120  # Framerate
 GRAVITY = 9.81  # Gravité en m/s²
 BALL_SPEED = 10  # Vitesse initiale de la balle
 BACKGROUND_IMAGE = "images/bg.jpg"
