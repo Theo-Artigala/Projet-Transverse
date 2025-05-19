@@ -1,9 +1,20 @@
 # settings.py
+import pygame
+pygame.mixer.init()
 
-WIDTH, HEIGHT = 1080, 720  # Taille de la fenêtre
-FPS = 60  # Framerate
-GRAVITY = 9.81  # Gravité en m/s²
-BALL_SPEED = 10  # Vitesse initiale de la balle
-BACKGROUND_IMAGE = "images/bg.jpg"
-BALL_IMAGE = "images/boulet_de_canon.png"
+WIDTH = 1366
+HEIGHT = 768
+FPS = 60
+GRAVITY = 1
+SCORE = 0
+NBR_DESSAI = 0
+BACKGROUND_IMAGE = "images/bg2.jpg"
+BALL_IMAGE = "images/balle.png"
 HOOP_IMAGE = "images/hoop.png"
+MENU_PRINCIPAL = "images/menu.png"
+IMAGE_BOUTON_START = "images/bouton_start.png"
+END_SCREEN = "images/endscreen.png"
+IMAGE_BOUTON_RESTART = "images/bouton_restart.png"
+IMAGE_BOUTON_QUIT = "images/bouton_quit.png"
+niveau_actuel = 0
+son = pygame.mixer.Sound('sons/death_sound.wav')

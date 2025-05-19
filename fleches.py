@@ -1,3 +1,4 @@
+
 import pygame
 
 WIDTH = 800
@@ -61,3 +62,4 @@ while running:
     clock.tick(60)
 
 pygame.quit()
+

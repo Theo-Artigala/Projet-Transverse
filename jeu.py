@@ -1,60 +1,92 @@
 import pygame
-
-pygame.init()
-
-# Paramètres de la fenêtre
-WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Jeu de Tir dans les Cerceaux")
-
-# Charger les images
-background = pygame.image.load("images/bg.jpg")
-canon_img = pygame.image.load("images/canon.png")
-balle_img = pygame.image.load("images/boulet_de_canon.png")
-cerceau_img = pygame.image.load("images/hoop.png")
+from settings import *
+from ball import *
+from hoop import *
+from niveau import *
+from hoop import *
 
 
-# Classes du jeu
-class Balle:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.vx = 0
-        self.vy = 0
-        self.lancee = False
+def lancer_jeu(niveau):
+    pygame.init()
+    clock = pygame.time.Clock()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+    background = pygame.image.load(niveau.decor)
+    fond = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    gamestate = True
+    angle, force = selection_parametres(screen, fond)
 
-    def lancer(self, angle, puissance):
-        self.vx = puissance * pygame.math.cos(angle)
-        self.vy = -puissance * pygame.math.sin(angle)
-        self.lancee = True
+    # Création des objets
+    hoop = Hoop(*niveau.hoop_pos)
+    ball = Ball(*niveau.ball_start, force, angle)
 
-    def update(self):
-        if self.lancee:
-            self.x += self.vx
-            self.y += self.vy
-            self.vy += 0.5  # Gravité
-
-    def draw(self):
-        screen.blit(balle_img, (self.x, self.y))
-
-
-def lancer_jeu():
+    # Boucle de jeu
     running = True
-    balle = Balle(100, 500)
-
     while running:
-        screen.blit(background, (0, 0))
-        balle.update()
-        balle.draw()
+        screen.blit(fond, (0, 0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                pygame.quit()
-                exit()
+
+        # Utilise la liste de murs du niveau
+        ball.update(niveau.murs)
+        ball.draw(screen)
+        hoop.draw(screen)
+        global NBR_DESSAI
+        if ball.vx ==0 and ball.vy ==0:
+            son.play()
+            NBR_DESSAI = NBR_DESSAI + 1
+            niveau1 = niveaux[niveau_actuel]
+            niveau1.ball_start = (ball.x, ball.y)
+            lancer_jeu(niveau1)
+        if hoop.check_collision(ball) and gamestate:
+            gamestate = False
+
+            print("Panier réussi !")
+
+        # Dessine les murs du niveau
+        for wall in niveau.murs:
+            wall.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
+    pygame.quit()
+
+
+
+def selection_parametres(screen, fond):
+    angle = 45
+    force = 25
+    font = pygame.font.Font(None, 30)
+
+    selecting = True
+    while selecting:
+        screen.blit(fond, (0, 0))
+        angle_text = font.render(f"Angle: {angle}°", True, (255, 255, 255))
+        force_text = font.render(f"Force: {force}", True, (255, 255, 255))
+        start_text = font.render("Entrée pour tirer", True, (255, 255, 0))
+
+        screen.blit(angle_text, (50, 50))
+        screen.blit(force_text, (50, 100))
+        screen.blit(start_text, (50, 150))
 
         pygame.display.flip()
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    angle = min(angle + 5, 90)
+                elif event.key == pygame.K_DOWN:
+                    angle = max(angle - 5, 0)
+                elif event.key == pygame.K_LEFT:
+                    force = max(force - 1, 10)
+                elif event.key == pygame.K_RIGHT:
+                    force = min(force + 1, 100)
+                elif event.key == pygame.K_RETURN:
+                    selecting = False
 
-if __name__ == "__main__":
-    lancer_jeu()
+    return angle, force
