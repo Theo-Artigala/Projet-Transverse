@@ -13,7 +13,7 @@ def lancer_jeu():
     angle, force = selection_parametres(screen, fond)
 
     # Création des objets
-    ball = Ball(50, HEIGHT - 50, force)
+    ball = Ball(50, HEIGHT - 50, force,angle)
     hoop = Hoop(WIDTH - 150, HEIGHT // 2)
 
     # Boucle de jeu
@@ -31,6 +31,7 @@ def lancer_jeu():
 
         if hoop.check_collision(ball) and gamestate == True:
             gamestate = False
+
             print("Panier réussi !")
 
         pygame.display.flip()
