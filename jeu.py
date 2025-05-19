@@ -1,7 +1,11 @@
 import pygame
 from settings import *
-from ball import Ball
-from hoop import Hoop
+from ball import *
+from collisions import *
+walls = [
+    wall(300, 300, 100, 20),
+    wall(500, 400, 150, 30)
+]
 
 def lancer_jeu():
     pygame.init()
@@ -13,24 +17,26 @@ def lancer_jeu():
     angle, force = selection_parametres(screen, fond)
 
     # Création des objets
-    ball = Ball(50, HEIGHT - 50, force)
+    ball = Ball(50, HEIGHT - 50, force,angle)
     hoop = Hoop(WIDTH - 150, HEIGHT // 2)
 
     # Boucle de jeu
     running = True
     while running:
         screen.blit(fond, (0, 0))
-
+        for wall in walls:
+            wall.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        ball.update()
+        ball.update(walls)
         ball.draw(screen)
         hoop.draw(screen)
 
         if hoop.check_collision(ball) and gamestate == True:
             gamestate = False
+
             print("Panier réussi !")
 
         pygame.display.flip()
