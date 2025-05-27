@@ -1,4 +1,6 @@
 import pygame
+
+import end_screen
 from settings import *
 from ball import *
 from hoop import *
@@ -47,7 +49,7 @@ def lancer_jeu(niveau):
                 lancer_jeu(niveaux[niveau_actuel])
             else:
                 print("Tous les niveaux terminés !")
-                # Retour au menu ou fin
+                end_screen.END_SCREEN
             return
 
         # Dessine les murs du niveau
