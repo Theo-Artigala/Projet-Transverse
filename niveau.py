@@ -8,7 +8,7 @@ class Niveau:
         self.ball_start = ball_start
         self.murs = murs if murs is not None else []
 
-# Définition des niveaux avec murs
+# on def nos lvl et les murs
 niveaux = [
     Niveau(
         BACKGROUND_IMAGE,

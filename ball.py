@@ -18,7 +18,7 @@ class Ball:
         self.vy = -force * math.sin(self.angle)
         self.bounces = 0
         self.max_bounces = 15
-        self.trail = []  # Liste des anciennes positions [(x, y), ...]
+        self.trail = []  # Liste des anciennes positions pour faire la trainee en gros on copie tt les anciennes positioins de la balle pour un effet style
         self.max_trail_length = 15  # Nombre de points dans la traînée
 
     def update(self, walls):
@@ -66,6 +66,11 @@ class Ball:
         elif self.x + self.radius > WIDTH:
             self.x = WIDTH - self.radius
             self.vx = -self.vx * restitution
+
+        elif self.y - self.radius <0:
+            self.y =  self.radius
+            self.vy = -self.vy * restitution
+
 
         self.rect.x = self.x - self.radius
         self.rect.y = self.y - self.radius
