@@ -53,7 +53,7 @@ def lancer_jeu(niveau):
                 lancer_jeu(niveaux[niveau_actuel])
             else:
                 print("Tous les niveaux terminés !")
-                end_screen.END_SCREEN
+                end_screen.end_screen()
             return
 
         # met les murs du niveau dans le code
