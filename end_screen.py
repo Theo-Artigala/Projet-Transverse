@@ -1,8 +1,9 @@
 import pygame
 import jeu
 from settings import *
+from menu import *
 
-def menu():
+def end_screen():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption(END_SCREEN)
@@ -24,6 +25,6 @@ def menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
                     running = False
-                    menu.menu()
+                    menu.menu
 
         pygame.display.flip()

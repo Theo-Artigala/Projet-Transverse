@@ -12,7 +12,7 @@ class Niveau:
 niveaux = [
     Niveau(
         BACKGROUND_IMAGE,
-        (600, 300),
+        (1000, 300),
         (100, 500),
         murs=[
             wall(100, 600, 200, 20),
