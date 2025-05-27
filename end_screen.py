@@ -32,12 +32,13 @@ def end_screen():
                 exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
-                    # Recommencer le jeu
+                    # Fin du jeu
                     running = False
                     pygame.quit()
-                    # Tu peux relancer ton jeu ici si besoin
                 elif button_menu_rect.collidepoint(event.pos):
                     # Retourner au menu
+                    global niveau_actuel
+                    niveau_actuel = 0
                     menu.menu()
                     running = False
                     pygame.quit()

@@ -18,7 +18,6 @@ def lancer_jeu(niveau):
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
     background = pygame.image.load(niveau.decor)
     fond = pygame.transform.scale(background, (WIDTH, HEIGHT))
-    gamestate = True
     angle, force = selection_parametres(screen, fond, niveau)
 
     # on crée nos objets
@@ -47,12 +46,17 @@ def lancer_jeu(niveau):
             niveau1.ball_start = (ball.x, ball.y)
             lancer_jeu(niveau1)
         if hoop.check_collision(ball):
+            print(niveau_actuel)
             print("Niveau terminé !")
             if niveau_actuel + 1 < len(niveaux):
                 niveau_actuel += 1
+                print(niveau_actuel)
                 lancer_jeu(niveaux[niveau_actuel])
+
             else:
+                print(len(niveaux))
                 print("Tous les niveaux terminés !")
+                print(niveau_actuel)
                 end_screen.end_screen()
             return
 
@@ -101,7 +105,7 @@ def selection_parametres(screen, fond, niveau):
             points.append((x, y))
             t += dt
 
-
+        draw_fleche(screen, angle, force, (x_start, y_start))
         # Dessine la balle à la position de départ
         balle.rect.x = x_start - balle.radius
         balle.rect.y = y_start - balle.radius
@@ -115,7 +119,7 @@ def selection_parametres(screen, fond, niveau):
         screen.blit(force_text, (50, 100))
         screen.blit(start_text, (50, 150))
 
-        draw_fleche(screen, angle, force, (x_start, y_start))
+
 
         pygame.display.flip()
 

@@ -7,6 +7,8 @@ def menu():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption(MENU_PRINCIPAL)
+    global niveau_actuel
+    niveau_actuel = 0
     niveau_choisi = niveaux[niveau_actuel]
 
     background = pygame.image.load(BACKGROUND_IMAGE)
