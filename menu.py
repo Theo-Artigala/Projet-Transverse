@@ -11,7 +11,7 @@ def menu():
 
     background = pygame.image.load(BACKGROUND_IMAGE)
     button_img = pygame.image.load(IMAGE_BOUTON_START)
-    button_img = pygame.transform.scale(button_img, (200, 80))
+    button_img = pygame.transform.scale(button_img, (200, 150))
     button_rect = button_img.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
 
     running = True

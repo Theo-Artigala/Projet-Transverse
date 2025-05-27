@@ -17,7 +17,7 @@ def lancer_jeu(niveau):
     gamestate = True
     angle, force = selection_parametres(screen, fond, niveau)
 
-    # Création des objets
+    # on crée nos objets
     hoop = Hoop(*niveau.hoop_pos)
     ball = Ball(*niveau.ball_start, force, angle)
 
@@ -52,7 +52,7 @@ def lancer_jeu(niveau):
                 end_screen.END_SCREEN
             return
 
-        # Dessine les murs du niveau
+        # met les murs du niveau dans le code
         for wall in niveau.murs:
             wall.draw(screen)
 
@@ -97,10 +97,6 @@ def selection_parametres(screen, fond, niveau):
             points.append((x, y))
             t += dt
 
-        # Dessine la trajectoire
-        for point in points:
-            if 0 <= point[0] <= WIDTH and 0 <= point[1] <= HEIGHT:
-                pygame.draw.circle(screen, (255, 255, 0, 128), (int(point[0]), int(point[1])), 3)
 
         # Dessine la balle à la position de départ
         balle.rect.x = x_start - balle.radius

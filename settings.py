@@ -1,4 +1,4 @@
-# settings.py
+
 import pygame
 pygame.mixer.init()
 
