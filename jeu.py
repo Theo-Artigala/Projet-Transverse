@@ -1,5 +1,10 @@
 import pygame
+
 from fleches import *
+
+
+import end_screen
+
 from settings import *
 from ball import *
 from hoop import *
@@ -34,15 +39,22 @@ def lancer_jeu(niveau):
         ball.draw(screen)
         hoop.draw(screen)
         global NBR_DESSAI
+        global niveau_actuel
         if ball.vx ==0 and ball.vy ==0:
             son.play()
             NBR_DESSAI = NBR_DESSAI + 1
             niveau1 = niveaux[niveau_actuel]
             niveau1.ball_start = (ball.x, ball.y)
             lancer_jeu(niveau1)
-        if hoop.check_collision(ball) and gamestate:
-            gamestate = False
-            print("Panier réussi !")
+        if hoop.check_collision(ball):
+            print("Niveau terminé !")
+            if niveau_actuel + 1 < len(niveaux):
+                niveau_actuel += 1
+                lancer_jeu(niveaux[niveau_actuel])
+            else:
+                print("Tous les niveaux terminés !")
+                end_screen.END_SCREEN
+            return
 
         # Dessine les murs du niveau
         for wall in niveau.murs:
