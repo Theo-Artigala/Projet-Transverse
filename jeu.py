@@ -114,7 +114,7 @@ def selection_parametres(screen, fond, niveau):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    angle = min(angle + 5, 90)
+                    angle = min(angle + 5, 180)
                 elif event.key == pygame.K_DOWN:
                     angle = max(angle - 5, 0)
                 elif event.key == pygame.K_LEFT:
