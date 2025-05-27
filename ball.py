@@ -22,10 +22,24 @@ class Ball:
         self.max_trail_length = 15  # Nombre de points dans la traînée
 
     def update(self, walls):
-        # Mise à jour des positions
+        # Limiter la vitesse en descente
+        if self.vy > 0:  # La balle descend
+            self.vy *= 0.98  # Diminution progressive, ajustez le facteur
+            if abs(self.vy) < 0.1:
+                self.vy = 0
+
+        # Limite la vitesse horizontale
+        max_speed = 20
+        self.vx = max(-max_speed, min(self.vx, max_speed))
+
+        # Mouvement
         self.vy += GRAVITY
         self.x += self.vx
         self.y += self.vy
+
+        # Mise à jour du rect
+        self.rect.x = self.x - self.radius
+        self.rect.y = self.y - self.radius
 
         restitution = 0.7
 
@@ -57,22 +71,20 @@ class Ball:
         self.rect.y = self.y - self.radius
 
         for wall in walls:
-            if wall.check_collision(self):
-                # Collision avec un mur
-                # Vérifier la position relative pour déterminer la normale
+            if self.rect.colliderect(wall.rect):
+                # Gestion collision (comme précédemment)
                 if abs(self.rect.right - wall.rect.left) < 10 and self.vx > 0:
                     self.x = wall.rect.left - self.radius
-                    self.vx = -self.vx * restitution
+                    self.vx = -self.vx * 0.7
                 elif abs(self.rect.left - wall.rect.right) < 10 and self.vx < 0:
                     self.x = wall.rect.right + self.radius
-                    self.vx = -self.vx * restitution
+                    self.vx = -self.vx * 0.7
                 elif abs(self.rect.bottom - wall.rect.top) < 10 and self.vy > 0:
                     self.y = wall.rect.top - self.radius
-                    self.vy = -self.vy * restitution
-                    self.bounces += 1
+                    self.vy = -self.vy * 0.7
                 elif abs(self.rect.top - wall.rect.bottom) < 10 and self.vy < 0:
                     self.y = wall.rect.bottom + self.radius
-                    self.vy = -self.vy * restitution
+                    self.vy = -self.vy * 0.7
 
 
     def draw(self, screen):
