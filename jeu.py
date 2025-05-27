@@ -1,4 +1,5 @@
 import pygame
+from fleches import *
 from settings import *
 from ball import *
 from hoop import *
@@ -105,6 +106,8 @@ def selection_parametres(screen, fond, niveau):
         screen.blit(angle_text, (50, 50))
         screen.blit(force_text, (50, 100))
         screen.blit(start_text, (50, 150))
+
+        draw_fleche(screen, angle, force, (x_start, y_start))
 
         pygame.display.flip()
 
