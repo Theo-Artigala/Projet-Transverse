@@ -75,21 +75,57 @@ class Ball:
         self.rect.x = self.x - self.radius
         self.rect.y = self.y - self.radius
 
+        def circle_rect_collision(cx, cy, radius, rect):
+            # la on va check le point de nos murs qui sera le plus proche du centre de notre balle
+            lacollision = False
+            closest_x = max(rect.left, min(cx, rect.right))
+            closest_y = max(rect.top, min(cy, rect.bottom))
+            # mtn on calcule la distance entre ce point et le centre de la balle.
+            dx = cx - closest_x
+            dy = cy - closest_y
+            if dx * dx + dy * dy < radius * radius:
+                lacollision = True
+            return lacollision
+
         for wall in walls:
-            if self.rect.colliderect(wall.rect):
-                # Gestion collision (comme précédemment)
-                if abs(self.rect.right - wall.rect.left) < 10 and self.vx > 0:
-                    self.x = wall.rect.left - self.radius
-                    self.vx = -self.vx * 0.7
-                elif abs(self.rect.left - wall.rect.right) < 10 and self.vx < 0:
-                    self.x = wall.rect.right + self.radius
-                    self.vx = -self.vx * 0.7
-                elif abs(self.rect.bottom - wall.rect.top) < 10 and self.vy > 0:
-                    self.y = wall.rect.top - self.radius
-                    self.vy = -self.vy * 0.7
-                elif abs(self.rect.top - wall.rect.bottom) < 10 and self.vy < 0:
-                    self.y = wall.rect.bottom + self.radius
-                    self.vy = -self.vy * 0.7
+            if circle_rect_collision(self.x, self.y, self.radius, wall.rect):
+                # Trouver le point du mur le plus proche du centre de la balle
+                closest_x = max(wall.rect.left, min(self.x, wall.rect.right))
+                closest_y = max(wall.rect.top, min(self.y, wall.rect.bottom))
+                dx = self.x - closest_x
+                dy = self.y - closest_y
+
+                # Calculer la distance
+                dist_squared = dx * dx + dy * dy
+                dist = dist_squared ** 0.5  # racine carrée
+
+                # Si la distance est nulle, on ne fait rien (on saute la collision)
+                if dist == 0:
+                    continue
+
+                # Normaliser le vecteur (dx, dy)
+                nx = dx / dist
+                ny = dy / dist
+
+                # Repousser la balle hors du mur
+                overlap = self.radius - dist
+                self.x += nx * overlap
+                self.y += ny * overlap
+
+                # Calcul du rebond (projection sur la normale)
+                v_dot_n = self.vx * nx + self.vy * ny
+                self.vx -= 2 * v_dot_n * nx
+                self.vy -= 2 * v_dot_n * ny
+
+                # Amortissement
+                self.vx *= 0.7
+                self.vy *= 0.7
+
+                # Mettre à jour le rect
+                self.rect.x = self.x - self.radius
+                self.rect.y = self.y - self.radius
+
+                break  # On ne traite qu'une collision par frame
 
 
     def draw(self, screen):
