@@ -22,7 +22,6 @@ niveaux = [
     ),
     Niveau(
         BACKGROUND_IMAGE,
-           (758, 232),
            (100, 500),
         murs=[
             wall(400, 530, 169, 43),
