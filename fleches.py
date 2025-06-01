@@ -8,6 +8,7 @@ def draw_fleche(screen, angle, force, origin):
     fleche_image = pygame.transform.rotate(pygame.image.load("images/fleche.png").convert_alpha(), 90)
     fleche_image = pygame.transform.scale(fleche_image, (150, 150))
 
+    # Calcul de la nouvelle taille de la flèche
     original_size = fleche_image.get_size()
     scale_factor = 1.0 + 0.01 * force
     new_width = original_size[0]
