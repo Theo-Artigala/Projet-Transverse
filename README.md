@@ -65,4 +65,15 @@ Outils : PyCharm, GitHub
 - ball.py : classe implémentant la balle (collisions, rebonds, ...)
 - end_screen.py : fonction de fin de jeu
 
+Ce tableau montre quels fichiers sont utilisés dans chaque fichier du jeu :
+
+| ball.py      | end_screen.py   | hoop.py     | jeu.py         | main.py  | menu.py     | niveau.py   |
+|--------------|-----------------|-------------|----------------|----------|-------------|-------------|
+| settings.py  | settings.py     | settings.py | settings.py    | menu.py  | settings.py | settings.py |
+|              | jeu.py          |             | flèches.py     |          | jeu.py      | hoop.py     |
+|              | menu.py         |             | end_screen.py  |          | niveau.py   |             |
+|              |                 |             | ball.py        |          |             |             |
+|              |                 |             | niveau.py      |          |             |             |
+|              |                 |             | hoop.py        |          |             |             |
+  
   
