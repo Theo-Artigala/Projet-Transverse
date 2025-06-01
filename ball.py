@@ -83,49 +83,50 @@ class Ball:
             # mtn on calcule la distance entre ce point et le centre de la balle.
             dx = cx - closest_x
             dy = cy - closest_y
+            # la ce qu'on va faire c'est verifier que notre balle n'est pas en contact avec le mur donc si elle est en contact on renvoie true et dans la fonction suivante on va déclancher le code du rebond
             if dx * dx + dy * dy < radius * radius:
                 lacollision = True
             return lacollision
 
         for wall in walls:
-            if circle_rect_collision(self.x, self.y, self.radius, wall.rect):
-                # Trouver le point du mur le plus proche du centre de la balle
+            if circle_rect_collision(self.x, self.y, self.radius, wall.rect): #donc comme dit plutot si lacollisioin est renvoyée true on détecte une collision donc on lance le code pour le rebond
+                # meme calcul que dans notre fonction d'avant on cherche le point le plus proche du mur
                 closest_x = max(wall.rect.left, min(self.x, wall.rect.right))
                 closest_y = max(wall.rect.top, min(self.y, wall.rect.bottom))
-                dx = self.x - closest_x
+                dx = self.x - closest_x # la on va calculer le vecteur qui va du point de contact jusqu'a notre balle
                 dy = self.y - closest_y
 
-                # Calculer la distance
+                # Calculer la distance du vecteur en question
                 dist_squared = dx * dx + dy * dy
                 dist = dist_squared ** 0.5  # racine carrée
 
-                # Si la distance est nulle, on ne fait rien (on saute la collision)
+                # Si la distance est nulle, on ne fait rien (on saute la collision) c'est le cas ou la balle elle touche le coin, ca fait bugger dcp on la saute
                 if dist == 0:
                     continue
 
-                # Normaliser le vecteur (dx, dy)
+                # ici on normalise le vecteur pour avoir la direction du rebond en gros si la balle va vers le haut et touche le bord haut du mur, le vecteur ira vers le bas parceque quand la balle rebondira elle devra partir vers le bas aussi
                 nx = dx / dist
                 ny = dy / dist
 
-                # Repousser la balle hors du mur
-                overlap = self.radius - dist
-                self.x += nx * overlap
-                self.y += ny * overlap
+                # comme la collision etait vérifiée la balle est en gros rentrée tres légerement dans le mur, dcp faut que on la décale
+                decalage = self.radius - dist
+                self.x += nx * decalage
+                self.y += ny * decalage
 
-                # Calcul du rebond (projection sur la normale)
-                v_dot_n = self.vx * nx + self.vy * ny
-                self.vx -= 2 * v_dot_n * nx
+                # Calcul du rebond
+                v_dot_n = self.vx * nx + self.vy * ny #ca ca va etre la valeur de la vitesse de la balle dans la direction de la normale en gros à quel point la balle va "dans" le mur
+                self.vx -= 2 * v_dot_n * nx #on calcule la  nouvelle vitesse et on l'enleve deux fois pour "réfléchir" la vitesse
                 self.vy -= 2 * v_dot_n * ny
 
-                # Amortissement
+                # Amortissement de la vitesse sinon bah rebonds infini car pas de perte de vitesse
                 self.vx *= 0.7
                 self.vy *= 0.7
 
-                # Mettre à jour le rect
+                # Mettre à jour la position de la balle
                 self.rect.x = self.x - self.radius
                 self.rect.y = self.y - self.radius
 
-                break  # On ne traite qu'une collision par frame
+                break  # check que une seul collion par fps
 
 
     def draw(self, screen):
