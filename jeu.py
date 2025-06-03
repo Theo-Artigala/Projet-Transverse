@@ -119,7 +119,7 @@ def selection_parametres(screen, fond, niveau):
         y = y_start
 
         if show_trajectory:
-            while y < HEIGHT and x > 0 and x < WIDTH:
+            while y < HEIGHT and x > 0 and x < WIDTH and y > 0:
                 # Calcul de la position à t + dt
                 x = x_start + vx * t
                 y = y_start + vy * t + 0.5 * GRAVITY * t * t

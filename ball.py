@@ -24,7 +24,7 @@ class Ball:
     def update(self, walls):
         # Limiter la vitesse en descente
         if self.vy > 0:  # La balle descend
-            self.vy *= 0.98  # Diminution progressive, ajustez le facteur
+            self.vy *= 0.98  # Diminution progressive
             if abs(self.vy) < 0.1:
                 self.vy = 0
 
@@ -126,7 +126,7 @@ class Ball:
                 self.rect.x = self.x - self.radius
                 self.rect.y = self.y - self.radius
 
-                break  # check que une seul collion par fps
+
 
 
     def draw(self, screen):
