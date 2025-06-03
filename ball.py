@@ -8,7 +8,7 @@ class Ball:
         original_image = pygame.image.load(BALL_IMAGE).convert_alpha()
         self.x = x
         self.y = y
-        self.radius = 25
+        self.radius = 25 # rayon de la balle
         self.image = pygame.transform.scale(original_image, (self.radius * 2, self.radius * 2))
         self.rect = self.image.get_rect(center=(x, y))
         self.color = (255, 0, 0)
@@ -128,15 +128,18 @@ class Ball:
 
 
 
-
+    # trainée de la balle
     def draw(self, screen):
 
         for i, pos in enumerate(self.trail):
             alpha = int(255 * (i + 1) / len(self.trail))  # Opacité progressive
-            radius = int(self.radius-5 * (i + 1) / len(self.trail))  # Taille progressive
-            trail_surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+            radius = int(self.radius-5 * (i + 1) / len(self.trail))  # Taille progressive de la trainée
+            # Nouvelle surface temporaire carré plus grande que celle de la balle pour dessiner un seul point
+            trail_surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA) # init du canal alpha pour l'opacité
+            # dessine le cercle sur trail_surf
             pygame.draw.circle(trail_surf, (255, 140, 0, alpha), (radius, radius), radius)
+            # copie les pixels de trail_surf vers notre écran principal et décalage pour etre centré
             screen.blit(trail_surf, (pos[0] - radius, pos[1] - radius))
-
+        # affichage de la balle au dessus de la trainé
         screen.blit(self.image, self.rect)
 
