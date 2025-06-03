@@ -75,26 +75,26 @@ class Ball:
         self.rect.x = self.x - self.radius
         self.rect.y = self.y - self.radius
 
-        def circle_rect_collision(cx, cy, radius, rect):
+        def cercle_collision(cx, cy, radius, rect):
             # la on va check le point de nos murs qui sera le plus proche du centre de notre balle
             lacollision = False
-            closest_x = max(rect.left, min(cx, rect.right))
-            closest_y = max(rect.top, min(cy, rect.bottom))
+            plusproche_x = max(rect.left, min(cx, rect.right))
+            plusproche_y = max(rect.top, min(cy, rect.bottom))
             # mtn on calcule la distance entre ce point et le centre de la balle.
-            dx = cx - closest_x
-            dy = cy - closest_y
+            dx = cx -plusproche_x
+            dy = cy - plusproche_y
             # la ce qu'on va faire c'est verifier que notre balle n'est pas en contact avec le mur donc si elle est en contact on renvoie true et dans la fonction suivante on va déclancher le code du rebond
             if dx * dx + dy * dy < radius * radius:
                 lacollision = True
             return lacollision
 
         for wall in walls:
-            if circle_rect_collision(self.x, self.y, self.radius, wall.rect): #donc comme dit plutot si lacollisioin est renvoyée true on détecte une collision donc on lance le code pour le rebond
+            if cercle_collision(self.x, self.y, self.radius, wall.rect): #donc comme dit plutot si lacollisioin est renvoyée true on détecte une collision donc on lance le code pour le rebond
                 # meme calcul que dans notre fonction d'avant on cherche le point le plus proche du mur
-                closest_x = max(wall.rect.left, min(self.x, wall.rect.right))
-                closest_y = max(wall.rect.top, min(self.y, wall.rect.bottom))
-                dx = self.x - closest_x # la on va calculer le vecteur qui va du point de contact jusqu'a notre balle
-                dy = self.y - closest_y
+                plusproche_x = max(wall.rect.left, min(self.x, wall.rect.right))
+                plusproche_y = max(wall.rect.top, min(self.y, wall.rect.bottom))
+                dx = self.x - plusproche_x # la on va calculer le vecteur qui va du point de contact jusqu'a notre balle
+                dy = self.y - plusproche_y
 
                 # Calculer la distance du vecteur en question
                 dist_squared = dx * dx + dy * dy
